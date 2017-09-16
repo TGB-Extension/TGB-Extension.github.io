@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         TGB's Extensions
-// @version      2.3.1
+// @version      2.3.2
 // @author       TheGameBuilder on Scratch
 // @description  Make good use of them! :D
 // @namespace    http://felizolinha.github.io
@@ -216,8 +216,7 @@ var keysPressed = [],
     last_h_value = false;
 
 var scratcher,
-    userLanguage = window.navigator.language, //Check for the userLanguage prop. also in case IE needs support.
-    usingHTTP = false;
+    userLanguage = window.navigator.language; //Check for the userLanguage prop. also in case IE needs support.
     //online; Activate for Firefox version
 
 var Tips = [
@@ -1799,8 +1798,7 @@ TGB = {
             ['b', 'Creator?', 'creator'],
             ['b', 'Admin?', 'admin'],
             ['-'],
-            ['b', 'Offline?', 'offline'],
-            ['b', 'Is using HTTP polling?', 'http_poll']
+            ['b', 'Offline?', 'offline']
         ],
     },
     {
@@ -1841,10 +1839,6 @@ TGB = {
             } else {*/
             return !window.navigator.onLine;
             //}
-        },
-
-        http_poll: function() {
-           return usingHTTP;
         }
     })
 };
@@ -1928,7 +1922,7 @@ TGB.Gamepad.onInstall = function() {
             }
         }
     };
-    
+
     getStick = function(what, stick) {
         var x, y;
         switch (stick) {
@@ -1957,7 +1951,7 @@ TGB.Gamepad.onInstall = function() {
 
 function install_all() {
     var blocksInstalled = 0;
-    
+
     extensions.forEach(function(val) {
         blocksInstalled += TGB[val].descriptor.blocks.length;
         console.log('%cInstalling extension %c' + val + '%c [' + math.round(blocksInstalled * 100 / everyBlock.length, 1) + '%]', 'color:#34495e', 'color:#e67e22', 'color:#3498db');
@@ -2050,10 +2044,9 @@ unsafeWindow.console.log = (function(_super) {
                 return;
             } else if(args[arg].indexOf("AScreateProject") > -1) { //maybe check for initialize
                 creatingProj = true;
-            } else if(args[arg].indexOf("Successfully connected to TCP") > -1 || args[arg].indexOf("Falling back to HTTP polling") > -1) {
+            } else if(args[arg].indexOf("Successfully connected to cloud data server") > -1) {
                 load();
             }
-            if(args[arg].indexOf("HTTP polling.") > -1) {usingHTTP = true;}
             return _super.apply(this, args);
         }
     };
